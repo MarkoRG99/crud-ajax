@@ -18,30 +18,154 @@
 	  	<div class="collapse navbar-collapse" id="navbarColor02">
 		    <ul class="navbar-nav mr-auto">
 		      	<li class="nav-item">
-		        <a class="nav-link" href="https://markorg99.000webhostapp.com/CRUD-AJAX/tablaUsuarios.php" >Tabla</a>
+		        <a class="nav-link" href="tablaUsuarios.php" >Tabla</a>
 		      	</li>
 		    </ul>
 
 	  	</div>
-	</nav>
-</body>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<head>
-    <body>
-    <div class="card-body">
-    <h1 class="card-title mt-5" align="center">TITULO</h1>   
-  </div>
 
-<div align="center">
-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmPHbKN2jPwp8U8dnY38v8yDD4LEjqNWznVg&usqp=CAU"
- class="img-fluid align-center mx-auto mb-4" width="75%">
+	</nav>
+	<div class="row">
+		<div class="col-sm-12">
+			<button id="addnew" class="btn btn-dark"><span class="glyphicon glyphicon-plus"></span> Agregar nuevo</button>
+            <div id="alert" class="alert alert-dismissible alert-success text-center" style="margin-top:20px; display:none;">
+            	  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <span id="alert_message"></span>
+            </div>  
+			<table id="table1" class="table table-bordered table-striped" style="margin-top:20px;">
+				<thead>
+					<th>ID</th>
+					<th>Nombre del juego</th>
+					<th>Desarrollador</th>
+					<th>Fecha de Lanzamiento</th>
+					<th>Acción</th>
+				</thead>
+				<tbody id="tbody"></tbody>
+			</table>
+		</div>
+	</div>
 </div>
-    </body>
-</html>
+<!--Modal Agregar Nuevo -->
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            	<center><h4 class="modal-title" id="myModalLabel">Agregar Nuevo</h4></center>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+			<div class="container-fluid">
+			<form id="addForm">
+				<div class="row form-group">
+					<div class="col-sm-2">
+						<label class="control-label" style="position:relative; top:7px;">Nombre del juego:</label>
+					</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="firstname">
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-sm-2">
+						<label class="control-label" style="position:relative; top:7px;">Desarrollador:</label>
+					</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="lastname">
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-sm-2">
+						<label class="control-label" style="position:relative; top:7px;">Fecha de Lanzamiento:</label>
+					</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="address">
+					</div>
+				</div>
+            </div> 
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
+                <button type="submit" class="btn btn-dark"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</a>
+			</form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Editar -->
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            	<center><h4 class="modal-title" id="myModalLabel">Editar juego</h4></center>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+			<div class="container-fluid">
+			<form id="editForm">
+				<input type="hidden" class="id" name="id">
+				<div class="row form-group">
+					<div class="col-sm-2">
+						<label class="control-label" style="position:relative; top:7px;">Nombre del juego:</label>
+					</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control firstname" name="firstname">
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-sm-2">
+						<label class="control-label" style="position:relative; top:7px;">Desarrollador:</label>
+					</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control lastname" name="lastname">
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-sm-2">
+						<label class="control-label" style="position:relative; top:7px;">Fecha de Lanzamiento:</label>
+					</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control address" name="address">
+					</div>
+				</div>
+            </div> 
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-close"></span> Cancelar</button>
+                <button type="submit" class="btn btn-dark"><span class="fa fa-check"></span> Actualizar</a>
+			</form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal Eliminar -->
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <center><h4 class="modal-title" id="myModalLabel">Eliminar juego</h4></center>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">	
+            	<p class="text-center">¿Esta seguro en eliminar este juego?</p>
+				<h2 class="text-center fullname"></h2>
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-close"></span> Cancelar</button>
+                <button type="button" class="btn btn-danger id"><span class="fa fa-trash"></span> Si</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
 <footer class="text-center text-white fixed-bottom" style="background-color: #f8efef;">
 	<!-- Copyright -->
+	<script src="bootstrap/js/jquery.min.js"></script>
+	<script src="bootstrap/js/bootstrap.js"></script>
+	<script src="bootstrap/js/app.js"></script>
 	<div class="text-center p-3" style="background-color: #000000;">
 	 © 2021 Copyright: Marco Uriel Ramirez Grijalva
 	</div>
